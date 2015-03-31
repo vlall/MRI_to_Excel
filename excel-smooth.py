@@ -13,10 +13,10 @@ To-do: Make Averages worksheet for all runs
 
 
 import xlsxwriter
-
+import xlrd
 
 mmlist = ['sceneFace_0mm', 'sceneFace_3mm', 'sceneFace_5mm']
-subjectList = ['SCM01','SCM02','SCM03','SCM04','SCM05', 'SCM06','SCM07','SCM08','SCM09','SCM10','SCM11', 'SCM12', 'SCM13','SCM14']
+subjectList = ['SCM01','SCM02','SCM03','SCM04','SCM05', 'SCM06','SCM07','SCM08','SCM09','SCM10','SCM11', 'SCM12', 'SCM13','SCM14', 'SCM15', 'SCM16']
 failure = 0
 subjectDict = {}
 roiDict = {}
@@ -176,22 +176,6 @@ for smooth in mmlist:
             print ('*** FAILED TO MATCH ROIs: %s Data may be mismatched! ***\n\n\n' % (subject))
             failure += 1
 
-    # Make Average Sheet
-    totalFFA = 0
-    ws = wb.add_worksheet('Average')
-    ws.write(0, 1, 'Average')
-
-    for key, value in subjectDict.iteritems():
-        dynFaceData = subjectDict[key]
-        for key2, value2 in value.iteritems():
-            print key2
-        print dynFaceData['lFFA'][2]
-        totalFFA = float(dynFaceData['lFFA'][2]) + totalFFA 
-    avgLFFA  = totalFFA / len(subjectDict)
-    ws.write(1, 0, 'lFFA')
-    ws.write(1, 1, float(avgLFFA))
-    # End Average Sheet
-
-    print mmDict 
     wb.close()
+print subjectDict
 print ('Output: %s failure(s)' % str(failure))
